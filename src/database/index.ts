@@ -3,22 +3,19 @@ import type { Post } from "./types/post";
 import type { Sub } from "./types/sub";
 import type { User } from "./types/user";
 
-type DBResponse = {
+export type DBResponse<T = undefined> = {
   status: "200" | "400" | "401" | "404" | "500" | "501";
   message?: string;
+  responseData?: T;
 };
 
 export abstract class Database {
-  /**
-   * Initialize the database for cold start
-   */
-  initialize(): void {}
   /**
    * Create a new user in the database
    *
    * @param user The details of new user to be created
    */
-  public abstract createUser({ user }: { user: User }): DBResponse;
+  public abstract createUser({ user }: { user: User }): Promise<DBResponse>;
   /**
    * Update an existing user in the database
    *
@@ -31,23 +28,25 @@ export abstract class Database {
   }: {
     id: User["id"];
     newDetails: Partial<User>;
-  }): DBResponse;
+  }): Promise<DBResponse>;
   /**
    *
    * @param id The id of user to be deleted
    */
-  public abstract deleteUser({ id }: { id: User["id"] }): DBResponse;
+  public abstract deleteUser({ id }: { id: User["id"] }): Promise<DBResponse>;
   /**
+   * One of id or email is required
    *
    * @param id get user with this id
-   */
-  public abstract getUser({ id }: { id: User["id"] }): DBResponse;
-  /**
-   *
    * @param email get user with this email
    */
-  public abstract getUser({ email }: { email: User["email"] }): DBResponse;
-
+  public abstract getUser({
+    id,
+    email,
+  }: {
+    id?: User["id"];
+    email?: User["email"];
+  }): Promise<DBResponse<User>>;
   /**
    * Create a new subreddit in the database
    *
@@ -60,7 +59,7 @@ export abstract class Database {
   }: {
     sub: Sub;
     creatorId: User["id"];
-  }): DBResponse;
+  }): Promise<DBResponse>;
   /**
    * Update an existing sub in the database
    *
@@ -73,37 +72,53 @@ export abstract class Database {
   }: {
     id: Sub["id"];
     newDetails: Partial<Sub>;
-  }): DBResponse;
+  }): Promise<DBResponse>;
 
   /**
    *
    * @param userId The id of the used who joins the Sub
    * @param subId The id of the sub which user wants to join
    */
-  public abstract joinSub({
+  public async joinSub({
     userId,
     subId,
   }: {
     userId: User["id"];
     subId: Sub["id"];
-  }): DBResponse;
+  }): Promise<DBResponse> {
+    const { responseData: sub } = await this.getSub({ id: subId });
+    const { responseData: user } = await this.getUser({ id: userId });
+    const subResponse = await this.updateSub({
+      id: subId,
+      newDetails: { members: [...(sub?.members ?? []), userId] },
+    });
+    // TODO: Should wrap these two opearations in a transaction
+    const userRepsone = await this.updateUser({
+      id: userId,
+      newDetails: { subs: [...(user?.subs ?? []), subId] },
+    });
+    if (subResponse.status !== "200" || userRepsone.status !== "200") {
+      return {
+        status: "500",
+        message: `User: ${userRepsone.message}, Sub: ${subResponse.message}`,
+      };
+    }
+    return {
+      status: "200",
+      message: "Ok",
+    };
+  }
 
   /**
    *
    * @param id The id of sub to be deleted
    */
-  public abstract deleteSub({ id }: { id: Sub["id"] }): DBResponse;
+  public abstract deleteSub({ id }: { id: Sub["id"] }): Promise<DBResponse>;
   /**
    *
    * @param id get sub with this id
    */
-  public abstract getSub({ id }: { id: Sub["id"] }): DBResponse;
-  /**
-   *
-   * @param id get sub with this title
-   */
-  public abstract getSub({ title }: { title: Sub["title"] }): DBResponse;
-
+  public abstract getSub({ id }: { id: Sub["id"] }): Promise<DBResponse<Sub>>;
   /**
    * Create a new post in the database
    *
@@ -116,25 +131,33 @@ export abstract class Database {
   }: {
     post: Post;
     creatorId: User["id"];
-  }): DBResponse;
+  }): Promise<DBResponse>;
 
   /**
    *
    * @param id The id of post to be deleted
    */
-  public abstract deletePost({ id }: { id: Post["id"] }): DBResponse;
+  public abstract deletePost({ id }: { id: Post["id"] }): Promise<DBResponse>;
   /**
    *
    * @param id get post with this id
    */
-  public abstract getPost({ id }: { id: Post["id"] }): DBResponse;
+  public abstract getPost({
+    id,
+  }: {
+    id: Post["id"];
+  }): Promise<DBResponse<Post>>;
 
   /**
    * Create a new comment in the database
    *
    * @param sub The details of new comment to be created
    */
-  public abstract createComment({ comment }: { comment: Comment }): DBResponse;
+  public abstract createComment({
+    comment,
+  }: {
+    comment: Comment;
+  }): Promise<DBResponse>;
 
   /**
    * Update a comment
@@ -147,13 +170,17 @@ export abstract class Database {
   }: {
     commentId: Comment["id"];
     newComment: Partial<Comment>;
-  }): DBResponse;
+  }): Promise<DBResponse>;
 
   /**
    * Delete a comment
    * @param commentId The id of the comment to be deleted
    */
-  public deleteComment({ commentId }: { commentId: string }): DBResponse {
+  public deleteComment({
+    commentId,
+  }: {
+    commentId: string;
+  }): Promise<DBResponse> {
     return this.updateComment({
       commentId,
       newComment: {
@@ -166,5 +193,9 @@ export abstract class Database {
    *
    * @param id get comment with this id
    */
-  public abstract getComment({ id }: { id: Comment["id"] }): DBResponse;
+  public abstract getComment({
+    id,
+  }: {
+    id: Comment["id"];
+  }): Promise<DBResponse<Comment>>;
 }
