@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@radix-ui/react-tooltip": "^1.2.8",
+    "@hono/zod-validator": "^0.7.6",
     "@rjsf/core": "^6.2.5",
     "@rjsf/utils": "^6.2.5",
     "@rjsf/validator-ajv8": "^6.2.5",
@@ -19,10 +20,12 @@
     "clsx": "^2.1.1",
     "idb": "^8.0.3",
     "lucide-react": "^0.563.0",
+    "tailwind-merge": "^3.4.0",
+    "hono": "^4.11.5",
     "next": "16.1.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "tailwind-merge": "^3.4.0"
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
