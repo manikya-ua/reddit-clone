@@ -1,26 +1,41 @@
 "use client";
 
 import type { RJSFSchema } from "@rjsf/utils";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import loginSchema from "@/app/schemas/login-schema.json";
 import loginUiSchema from "@/app/schemas/login-ui-schema.json";
 import { DefaultForm } from "@/components/form/default-form";
-import { useMutation } from "@tanstack/react-query";
 import { client } from "@/server/client";
 
 export default function LoginCard() {
+  const queryClient = useQueryClient();
+
   const {
     mutate: login,
     isPending,
     error,
   } = useMutation({
     mutationFn: async (data: { email: string; password: string }) => {
-      const result = await client.api.v1.user.$get({ query: data });
-	  if (result.status !== 200) {
-		  throw new Error("Could not find the user")
-	  }	
-	  const user = await result.json()
-      alert(JSON.stringify(user, null, 2));
+      const session = await client.api.v1.sessions.$post({
+        json: { email: data.email, password: data.password },
+      });
+
+      if (session.status !== 200) {
+        throw new Error("Something wnent wrong");
+      }
+
+      const { session: parsedSession } = await session.json();
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          email: parsedSession.email,
+          descriptor: parsedSession.descriptor,
+        }),
+      );
+
+      queryClient.invalidateQueries({ queryKey: ["get-user"] });
     },
   });
 

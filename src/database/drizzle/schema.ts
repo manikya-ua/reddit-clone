@@ -1,4 +1,5 @@
 import {
+  char,
   type AnyPgColumn,
   date,
   integer,
@@ -6,6 +7,7 @@ import {
   pgTable,
   varchar,
 } from "drizzle-orm/pg-core";
+import { v4 as uuid } from "uuid";
 
 export const users = pgTable("users", {
   id: integer().primaryKey().generatedByDefaultAsIdentity(),
@@ -79,4 +81,9 @@ export const subs = pgTable("subs", {
   rules: varchar({ length: 30 }).array().default([]),
   createdAt: date().defaultNow(),
   updatedAt: date().defaultNow(),
+});
+
+export const sessions = pgTable("sessions", {
+  email: varchar({ length: 20 }),
+  descriptor: char({ length: 36 }).default(uuid()),
 });
