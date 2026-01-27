@@ -7,6 +7,7 @@ import signUpSchema from "@/app/schemas/signup-schema.json";
 import signUpUiSchema from "@/app/schemas/signup-ui-schema.json";
 import { DefaultForm } from "@/components/form/default-form";
 import { client } from "@/server/client";
+import { useRouter } from "next/navigation";
 
 type FormData = {
   username: string;
@@ -16,6 +17,8 @@ type FormData = {
 
 export default function SignupCard() {
   const [formData, setFormData] = useState<FormData>();
+
+  const router = useRouter();
 
   const {
     mutate: signUp,
@@ -42,6 +45,7 @@ export default function SignupCard() {
           }}
           onSubmit={(data) => {
             signUp(data.formData);
+            router.refresh();
           }}
           disabled={isPending}
         />

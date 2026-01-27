@@ -13,5 +13,6 @@ export function useGetUser() {
       return user;
     },
     queryKey: ["get-user"],
+    retry: 1,
   });
 }

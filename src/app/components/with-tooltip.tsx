@@ -15,7 +15,7 @@ export default function WithTooltip({
 }) {
   return (
     <Tooltip>
-      <TooltipTrigger>{children}</TooltipTrigger>
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
       <TooltipContent side={side}>{tooltipText}</TooltipContent>
     </Tooltip>
   );

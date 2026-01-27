@@ -8,7 +8,13 @@ import loginUiSchema from "@/app/schemas/login-ui-schema.json";
 import { DefaultForm } from "@/components/form/default-form";
 import { client } from "@/server/client";
 
-export default function LoginCard() {
+export default function LoginCard({
+  setShowModal,
+}: {
+  setShowModal: React.Dispatch<
+    React.SetStateAction<"none" | "login" | "signup">
+  >;
+}) {
   const queryClient = useQueryClient();
 
   const {
@@ -57,9 +63,19 @@ export default function LoginCard() {
           }}
           onSubmit={(data) => {
             login(data.formData);
+			setShowModal("none")
           }}
           disabled={isPending}
         />
+        <div className="text-center mt-2">
+          <button
+            type="button"
+            className="cursor-pointer underline hover:no-underline"
+            onClick={() => setShowModal("signup")}
+          >
+            Sign up instead
+          </button>
+        </div>
         <div className="text-rose-500 text-center mt-2">
           {error ? error.message : ""}
         </div>

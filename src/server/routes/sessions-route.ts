@@ -1,7 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
-import { setCookie } from "hono/cookie";
+import { deleteCookie, setCookie } from "hono/cookie";
 import { z } from "zod";
 import { db } from "@/database/drizzle/db";
 import { sessions, users } from "@/database/drizzle/schema";
@@ -38,6 +38,10 @@ const sessionsRouteApp = new Hono()
       setCookie(c, "user", JSON.stringify(session));
       return c.json({ session });
     },
-  );
+  )
+  .post("/logout", async (c) => {
+    deleteCookie(c, "user");
+    return c.json({ message: "ok" });
+  });
 
 export { sessionsRouteApp };
