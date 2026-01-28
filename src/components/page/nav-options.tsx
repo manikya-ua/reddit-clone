@@ -1,15 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { useGetUser } from "../hooks/useGetUser";
-import WithTooltip from "./with-tooltip";
-import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useGetLogout } from "@/app/hooks/useGetLogout";
+import { useGetUser } from "@/app/hooks/useGetUser";
+import { cn } from "@/lib/utils";
 import LoginCard from "./login-card";
 import Modal from "./modal";
 import SignupCard from "./sign-up-card";
-import { useGetLogout } from "../hooks/useGetLogout";
-import { useRouter } from "next/navigation";
+import WithTooltip from "./with-tooltip";
 
 export default function NavOptions() {
   const { data: user, isLoading } = useGetUser();
