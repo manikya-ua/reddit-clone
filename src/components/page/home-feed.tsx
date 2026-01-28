@@ -1,8 +1,8 @@
 "use client";
-import { useGetUser } from "@/app/hooks/useGetUser";
 import { useGetSubs } from "@/app/hooks/useGetSubs";
+import { useGetUser } from "@/app/hooks/useGetUser";
+import type { subs } from "@/database/drizzle/schema";
 import { ShowFeed } from "./show-feed";
-import { subs } from "@/database/drizzle/schema";
 
 export default function HomeFeed() {
   const { data: user, isLoading: isUserLoading } = useGetUser();
@@ -15,5 +15,10 @@ export default function HomeFeed() {
         sub !== undefined && sub !== null,
     )
     .flatMap((sub) => sub?.sub.posts ?? []);
-  return <ShowFeed postIds={postIds} />;
+  const isLoading = isSubsLoading || isUserLoading;
+  return (
+    <div className="w-2xl mx-auto">
+      <ShowFeed isLoading={isLoading} postIds={postIds} />
+    </div>
+  );
 }

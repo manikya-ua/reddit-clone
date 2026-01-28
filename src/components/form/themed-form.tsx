@@ -2,12 +2,12 @@ import { type ThemeProps, withTheme } from "@rjsf/core";
 import DescriptionFieldTemplate from "./templates/DescriptionFieldTemplate";
 import ErrorListTemplate from "./templates/ErrorListTemplate";
 import FieldErrorTemplate from "./templates/FieldErrorTemplate";
+import FieldTemplate from "./templates/FieldTemplate";
 import TitleFieldTemplate from "./templates/TitleFieldTemplate";
 import EmailWidget from "./widgets/email-widget";
 import PasswordWidget from "./widgets/password-widget";
-import TextWidget from "./widgets/text-widget";
-import FieldTemplate from "./templates/FieldTemplate";
 import SelectWidget from "./widgets/select-widget";
+import TextWidget from "./widgets/text-widget";
 import TextareaWidget from "./widgets/textarea-widget";
 
 const theme: ThemeProps = {

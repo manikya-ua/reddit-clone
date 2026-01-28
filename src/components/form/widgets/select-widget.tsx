@@ -1,4 +1,4 @@
-import type { WidgetProps } from "@rjsf/utils";
+import type { RJSFSchema, WidgetProps } from "@rjsf/utils";
 import {
   Select,
   SelectContent,
@@ -7,7 +7,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function SelectWidget(props: WidgetProps) {
+export default function SelectWidget(
+  props: WidgetProps<unknown, RJSFSchema, Map<number, string | null>>,
+) {
   return (
     <Select
       onValueChange={(val) => {

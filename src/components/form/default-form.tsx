@@ -4,9 +4,9 @@ import type { IChangeEvent } from "@rjsf/core";
 import type { RJSFSchema, UiSchema } from "@rjsf/utils";
 import validator from "@rjsf/validator-ajv8";
 import type { FormEvent } from "react";
-import { ThemedForm } from "./themed-form";
-import { useGetUser } from "@/app/hooks/useGetUser";
 import { useGetSubs } from "@/app/hooks/useGetSubs";
+import { useGetUser } from "@/app/hooks/useGetUser";
+import { ThemedForm } from "./themed-form";
 
 type DefaultFormProps<T> = {
   schema: RJSFSchema;
@@ -28,7 +28,7 @@ export function DefaultForm<T>({
   const { data: user } = useGetUser();
   const subsResult = useGetSubs(user?.subs);
   const userSubs = subsResult.map((sub) => sub.data);
-  const idToTitleMap = new Map();
+  const idToTitleMap = new Map<number, string | null>();
   userSubs.forEach((sub) => {
     if (!sub?.sub.id) return;
     idToTitleMap.set(sub.sub.id, sub.sub.title);

@@ -9,40 +9,46 @@ import { useGetUser } from "@/app/hooks/useGetUser";
 import { useJoinSub } from "@/app/hooks/useJoinSub";
 import { useLeaveSub } from "@/app/hooks/useLeaveSub";
 import { ShowFeed } from "@/components/page/show-feed";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Page({ params }: PageProps<"/r/[subId]">) {
   const { subId } = React.use(params);
-  const { data, isLoading } = useGetSub({ title: subId });
+  const { data, isLoading: isLoadingSub } = useGetSub({ title: subId });
   const sub = data?.sub;
 
   const { data: user, isLoading: isLoadingUser } = useGetUser();
   const subsResult = useGetSubs(user?.subs);
   const userSubs = subsResult.map((sub) => sub.data);
-  const isLoadingSubs = subsResult.some((sub) => sub.isLoading);
+  const isLoadingUserSubs = subsResult.some((sub) => sub.isLoading);
 
   const isJoinedSub = userSubs.map((sub) => sub?.sub.title).includes(subId);
 
   const queryClient = useQueryClient();
 
-  const { mutate: leaveSub } = useLeaveSub({
+  const { mutate: leaveSub, isPending: isLeavingSub } = useLeaveSub({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get-user"] });
     },
   });
-  const { mutate: joinSub } = useJoinSub({
+  const { mutate: joinSub, isPending: isJoiningSub } = useJoinSub({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get-user"] });
     },
   });
 
+  const isModifyingSub = isLeavingSub || isJoiningSub;
+
   const handleSubJoin = () => {
-    if (isLoading || isLoadingUser || isLoadingSubs) return;
+    if (isLoadingSub || isLoadingUser || isLoadingUserSubs || isModifyingSub)
+      return;
     if (isJoinedSub) {
       leaveSub({ userId: user?.id, subId: sub?.id });
     } else {
       joinSub({ userId: user?.id, subId: sub?.id });
     }
   };
+
+  const isLoading = isLoadingSub || isLoadingUserSubs || isLoadingUser;
 
   return (
     <div className="flex-1 relative">
@@ -57,14 +63,26 @@ export default function Page({ params }: PageProps<"/r/[subId]">) {
             />
           </div>
           <div className="flex flex-col gap-0.5">
-            <span className="text-2xl font-bold">r/{sub?.title}</span>
+            <span className="text-2xl font-bold">
+              {isLoading ? (
+                <Skeleton className="inline-block h-5 w-20 mt-1"></Skeleton>
+              ) : (
+                <>
+                  r/{sub?.title}
+                </>
+              )}
+            </span>
           </div>
         </div>
-        <ShowFeed postIds={sub?.posts} />
+        <ShowFeed isLoading={isLoading} postIds={sub?.posts} />
       </div>
       <div className="fixed top-16 right-2 bg-neutral-700 p-4 rounded-md flex flex-col gap-3 w-68">
         <div className="flex justify-between items-center text-lg">
-          {sub?.title}
+          {isLoading ? (
+            <Skeleton className="inline-block h-5 w-20 mt-1"></Skeleton>
+          ) : (
+            sub?.title
+          )}
         </div>
         <div className="flex gap-2 text-xs">
           <a
@@ -78,7 +96,7 @@ export default function Page({ params }: PageProps<"/r/[subId]">) {
             type="button"
             className="flex items-center gap-2 px-3 py-2 rounded-full bg-blue-600 hover:bg-blue-800 cursor-pointer"
             onClick={() => handleSubJoin()}
-            disabled={isLoading || isLoadingSubs || isLoadingUser}
+            disabled={isLoading || isModifyingSub}
           >
             {isJoinedSub ? "Joined" : "Join"}
           </button>

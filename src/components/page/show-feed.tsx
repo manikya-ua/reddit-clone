@@ -2,6 +2,7 @@
 
 import { useQueries, useQueryClient } from "@tanstack/react-query";
 import { formatDistance, parse } from "date-fns";
+import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useGetSubById } from "@/app/hooks/useGetSub";
 import type { posts } from "@/database/drizzle/schema";
@@ -9,8 +10,10 @@ import { client } from "@/server/client";
 
 export function ShowFeed({
   postIds,
+  isLoading: isLoadingMeta,
 }: {
   postIds: Array<number> | null | undefined;
+  isLoading?: boolean;
 }) {
   const postsResults = useQueries({
     queries: (postIds ?? []).map((postId) => ({
@@ -30,20 +33,28 @@ export function ShowFeed({
   const posts = postsResults.map((post) => post.data);
   const isLoadingPosts = postsResults.some((post) => post.isLoading);
 
-  if (posts.some((post) => post === undefined)) {
-    return null;
-  }
+  const isLoading = isLoadingMeta || isLoadingPosts;
 
   return (
     <div className="flex flex-col gap-5 w-full max-w-2xl mt-20">
-      {posts.map((post) => (
-        <div key={post?.post.id}>
-          <div className="h-px bg-neutral-700 w-full mb-2"></div>
-          <Post post={post?.post} />
-        </div>
-      ))}
+      {isLoading ? (
+        <Loader2 className="size-10 animate-spin w-fit mx-auto" />
+      ) : posts.length === 0 ? (
+        <EmptyState />
+      ) : (
+        posts.map((post) => (
+          <div key={post?.post.id}>
+            <div className="h-px bg-neutral-700 w-full mb-2"></div>
+            <Post post={post?.post} />
+          </div>
+        ))
+      )}
     </div>
   );
+}
+
+function EmptyState() {
+  return <div>No posts yet, begin the communication!</div>;
 }
 
 function Post({ post }: { post: typeof posts.$inferSelect | undefined }) {
