@@ -1,6 +1,9 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import { useGetSubs } from "@/app/hooks/useGetSubs";
+import { useGetUser } from "@/app/hooks/useGetUser";
+import type { subs } from "@/database/drizzle/schema";
 import { cn } from "@/lib/utils";
 
 export default function Aside({
@@ -10,6 +13,11 @@ export default function Aside({
   expanded: boolean;
   setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const { data: user } = useGetUser();
+  const subsResult = useGetSubs(user?.subs);
+  const userSubs = subsResult.map((res) => res.data);
+  const isLoadingSubs = subsResult.some((res) => res.isLoading);
+
   return (
     <>
       <button
@@ -119,6 +127,18 @@ export default function Aside({
                 width: 20,
                 height: 20,
               },
+              ...userSubs
+                .filter(
+                  (sub): sub is { sub: typeof subs.$inferSelect } =>
+                    sub !== undefined,
+                )
+                .map(({ sub }) => ({
+                  icon: "/icons/outline-logo.svg",
+                  href: `/r/${sub.title}`,
+                  text: sub.title ?? "",
+                  width: 20,
+                  height: 20,
+                })),
             ]}
           />
           <Separator />
