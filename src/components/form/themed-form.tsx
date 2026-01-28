@@ -6,18 +6,24 @@ import TitleFieldTemplate from "./templates/TitleFieldTemplate";
 import EmailWidget from "./widgets/email-widget";
 import PasswordWidget from "./widgets/password-widget";
 import TextWidget from "./widgets/text-widget";
+import FieldTemplate from "./templates/FieldTemplate";
+import SelectWidget from "./widgets/select-widget";
+import TextareaWidget from "./widgets/textarea-widget";
 
 const theme: ThemeProps = {
   widgets: {
     EmailWidget,
     PasswordWidget,
     TextWidget,
+    SelectWidget,
+    TextareaWidget,
   },
   templates: {
     TitleFieldTemplate,
     DescriptionFieldTemplate,
     FieldErrorTemplate,
     ErrorListTemplate,
+    FieldTemplate,
   },
 };
 

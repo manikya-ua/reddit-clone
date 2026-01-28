@@ -1,0 +1,16 @@
+{
+  "title": "Create a new Community",
+  "description": "Create a new community to create a platform with people with common interests to communicate",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "enum": ["public", "private"]
+    }
+  },
+  "required": ["title", "description", "status"]
+}

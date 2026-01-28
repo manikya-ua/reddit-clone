@@ -3,8 +3,13 @@ import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-export default function Aside() {
-  const [expanded, setExpanded] = useState(true);
+export default function Aside({
+  expanded,
+  setExpanded,
+}: {
+  expanded: boolean;
+  setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
     <>
       <button
@@ -212,7 +217,12 @@ function Section({
           <Image src="/icons/dropdown-icon.svg" alt="" width={20} height={20} />
         </button>
       )}
-      <div className={cn("transition-opacity", isCollapsed && "opacity-0 h-0 overflow-hidden")}>
+      <div
+        className={cn(
+          "transition-opacity",
+          isCollapsed && "opacity-0 h-0 overflow-hidden",
+        )}
+      >
         {items?.map((item) => (
           <a
             key={item.text}
