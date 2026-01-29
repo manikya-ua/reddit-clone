@@ -2,6 +2,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { format, parse } from "date-fns";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import React from "react";
 import { useGetSub } from "@/app/hooks/useGetSub";
 import { useGetSubs } from "@/app/hooks/useGetSubs";
@@ -13,7 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Page({ params }: PageProps<"/r/[subId]">) {
   const { subId } = React.use(params);
-  const { data, isLoading: isLoadingSub } = useGetSub({ title: subId });
+  const { data, isLoading: isLoadingSub, error } = useGetSub({ title: subId });
   const sub = data?.sub;
 
   const { data: user, isLoading: isLoadingUser } = useGetUser();
@@ -49,6 +50,10 @@ export default function Page({ params }: PageProps<"/r/[subId]">) {
   };
 
   const isLoading = isLoadingSub || isLoadingUserSubs || isLoadingUser;
+
+  if (error !== null) {
+    notFound();
+  }
 
   return (
     <div className="flex-1 relative">

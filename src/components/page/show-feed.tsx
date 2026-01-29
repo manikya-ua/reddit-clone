@@ -85,8 +85,11 @@ function Post({
 
   return (
     <div className="block p-2 pb-2 rounded-md hover:bg-neutral-800">
-      <a href={`/r/${sub?.sub.title}`}>
-        <div className="text-xs flex gap-2 hover:text-blue-300">
+      <div>
+        <a
+          href={`/r/${sub?.sub.title}`}
+          className="text-xs flex gap-2 hover:text-blue-300"
+        >
           <Image src="/icons/outline-logo.svg" width={12} height={12} alt="" />
           r/{sub?.sub.title}
           <span>-</span>
@@ -99,12 +102,20 @@ function Post({
               },
             )}
           </span>
-        </div>
-        <div className="text-3xl">{post?.title}</div>
-        <div className="mt-5 text-ellipsis max-w-full overflow-hidden">
+        </a>
+        <a
+          href={`/r/${sub?.sub.title}/comments/${post?.id}`}
+          className="block text-3xl"
+        >
+          {post?.title}
+        </a>
+        <a
+          href={`/r/${sub?.sub.title}/comments/${post?.id}`}
+          className="block mt-5 text-ellipsis max-w-full overflow-hidden"
+        >
           {post?.content}
-        </div>
-      </a>
+        </a>
+      </div>
       <div className="flex gap-3 mt-5">
         {withEdit ? (
           <div className="rounded-full flex gap-2 items-center text-sm bg-neutral-700">
