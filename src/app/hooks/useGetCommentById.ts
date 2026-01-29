@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { client } from "@/server/client";
 
-export function useGetCommentById(commentId: number | undefined) {
+export function useGetCommentById(commentId: number | undefined | null) {
   return useQuery({
     queryKey: ["get-comment", commentId],
     queryFn: async () => {
-      if (commentId === undefined) return;
+      if (!commentId) {
+        throw new Error("Comment id needef");
+      }
       const postsResults = await client.api.v1.comments["get-comment"].$post({
         json: { id: commentId },
       });
@@ -14,5 +16,6 @@ export function useGetCommentById(commentId: number | undefined) {
       }
       return (await postsResults.json()).comment;
     },
+    enabled: Boolean(commentId),
   });
 }

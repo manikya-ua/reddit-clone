@@ -70,7 +70,7 @@ const postsRouteApp = new Hono()
       if (!postsResult || postsResult.length === 0) {
         return c.json({ message: "not found" }, 404);
       }
-      return c.json({ post: postsResult[0] });
+      return c.json(postsResult[0]);
     },
   )
   .post(

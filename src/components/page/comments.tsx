@@ -13,7 +13,7 @@ export default function Comments({
   nesting?: number;
 }) {
   return (
-    <div style={{ marginLeft: `${nesting * 1}rem` }}>
+    <div style={{ marginLeft: `1.5rem` }}>
       {comments?.map((comment) => (
         <Comment nesting={nesting} commentId={comment} key={comment} />
       ))}
@@ -35,7 +35,7 @@ function Comment({
   });
   return (
     <div className="relative flex flex-col gap-2">
-      <div className="absolute inset-y-0 w-px bg-white -left-2"></div>
+      <div className="absolute inset-y-0 w-px bg-neutral-600 -left-2"></div>
       <div className="flex gap-1">
         <ProfilePic firstChar={author?.username?.[0] ?? ""} />
         <span className="text-sm">{author?.username}</span>

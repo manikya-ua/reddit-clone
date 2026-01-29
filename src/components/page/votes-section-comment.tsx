@@ -6,6 +6,13 @@ import { useGetCommentById } from "@/app/hooks/useGetCommentById";
 import { useGetUser } from "@/app/hooks/useGetUser";
 import { cn } from "@/lib/utils";
 import { client } from "@/server/client";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import ReplyForm from "./reply-form";
 
 export default function VotesSectionComment({
   commentId,
@@ -38,7 +45,7 @@ export default function VotesSectionComment({
   const isUpvoted = comment?.upvotes?.includes(user?.id ?? -1);
   const isDownvoted = comment?.downvotes?.includes(user?.id ?? -1);
   return (
-    <div className="flex gap-2 mt-5">
+    <div className="flex gap-2">
       <div
         className={cn(
           "rounded-full flex gap-1 items-center text-xs",
@@ -89,6 +96,21 @@ export default function VotesSectionComment({
           />
         </button>
       </div>
+      <Dialog>
+        <DialogTrigger asChild>
+          <button
+            type="button"
+            className="flex gap-1 px-2 py-1 rounded-full text-xs items-center cursor-pointer hover:bg-neutral-800"
+          >
+            <Image src="/icons/reply-icon.svg" width={12} height={12} alt="" />
+            <span>Reply</span>
+          </button>
+        </DialogTrigger>
+        <DialogContent className="dark">
+          <DialogTitle>Reply</DialogTitle>
+          <ReplyForm authorId={user?.id} commentId={commentId} />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

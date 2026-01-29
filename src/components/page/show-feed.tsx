@@ -47,12 +47,14 @@ export function ShowFeed({
       ) : posts.length === 0 ? (
         <EmptyState />
       ) : (
-        posts.map((post) => (
-          <div key={post?.post.id}>
-            <div className="h-px bg-neutral-700 w-full mb-2"></div>
-            <Post post={post?.post} withEdit={withEdit} />
-          </div>
-        ))
+        posts
+          .filter((post) => post !== undefined)
+          .map((post) => (
+            <div key={post.id}>
+              <div className="h-px bg-neutral-700 w-full mb-2"></div>
+              <Post post={post} withEdit={withEdit} />
+            </div>
+          ))
       )}
     </div>
   );
@@ -74,7 +76,7 @@ function Post({
   });
 
   return (
-    <div className="block p-2 pb-2 rounded-md hover:bg-neutral-800">
+    <div className="block p-2 pb-2 mb-3 rounded-md hover:bg-neutral-800">
       <div>
         <a
           href={`/r/${sub?.sub.title}`}
@@ -105,6 +107,7 @@ function Post({
         >
           {post?.content}
         </a>
+
         <VotesSection withEdit={withEdit} postId={post?.id} />
       </div>
     </div>

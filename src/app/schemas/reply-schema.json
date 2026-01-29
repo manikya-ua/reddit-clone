@@ -1,0 +1,10 @@
+{
+  "title": "",
+  "description": "Please follow the rules of the sub before replying",
+  "properties": {
+    "content": {
+      "type": "string"
+    }
+  },
+  "required": ["content"]
+}

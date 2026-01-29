@@ -8,6 +8,7 @@ import VotesSection from "@/components/page/votes-section";
 import { db } from "@/database/drizzle/db";
 import { posts, subs, type users } from "@/database/drizzle/schema";
 import { getUser } from "@/lib/server-actions";
+import BackButton from "@/components/page/back-button";
 
 export default async function Page({
   params,
@@ -56,9 +57,9 @@ function WithComments({
   post: typeof posts.$inferSelect | undefined;
 }) {
   return (
-    <div className="flex flex-col gap-3 max-w-6xl mx-auto px-7 py-10">
+    <div className="flex gap-3 max-w-6xl mx-auto px-7 py-10">
       <div>
-        <button type="button">Back</button>
+        <BackButton />
       </div>
       <div className="grow flex flex-col gap-1">
         <div className="flex gap-5">
@@ -81,7 +82,9 @@ function WithComments({
         <div className="text-pretty text-base text-neutral-300">
           {post?.content}
         </div>
-        <VotesSection postId={post?.id} withEdit={true} />
+        <div className="mb-5">
+          <VotesSection postId={post?.id} withEdit={true} canComment={true} />
+        </div>
         <Comments comments={post?.comments} />
       </div>
     </div>

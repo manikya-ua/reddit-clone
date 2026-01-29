@@ -8,7 +8,9 @@ export const useGetUserDetailsById = ({
 }) => {
   return useQuery({
     queryFn: async () => {
-      if (id === null || id === undefined) return;
+      if (id === null || id === undefined) {
+        throw new Error("id needed");
+      }
       const response = await client.api.v1.user["get-by-id"].$post({
         json: {
           id,

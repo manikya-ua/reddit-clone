@@ -7,13 +7,22 @@ import { useGetSubById } from "@/app/hooks/useGetSub";
 import { useGetUser } from "@/app/hooks/useGetUser";
 import { cn } from "@/lib/utils";
 import { client } from "@/server/client";
+import ReplyForm from "./reply-form";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 
 export default function VotesSection({
   postId,
   withEdit,
+  canComment,
 }: {
   postId: number | undefined;
   withEdit?: boolean;
+  canComment?: boolean;
 }) {
   const { data: user, isLoading: isLoadingUser } = useGetUser();
   const queryClient = useQueryClient();
@@ -108,13 +117,38 @@ export default function VotesSection({
         </div>
       )}
       {withEdit ? (
-        <a
-          href={`/r/${sub?.sub.title}/comments/${post?.id}`}
-          className="rounded-full flex gap-2 items-center text-sm bg-neutral-700 px-4 hover:bg-neutral-600"
-        >
-          <Image src="/icons/comments-icon.svg" width={16} height={16} alt="" />
-          {post?.comments?.length}
-        </a>
+        canComment ? (
+          <Dialog>
+            <DialogTrigger>
+              <div className="rounded-full flex gap-2 items-center text-sm bg-neutral-700 px-4 hover:bg-neutral-600 py-3">
+                <Image
+                  src="/icons/comments-icon.svg"
+                  width={16}
+                  height={16}
+                  alt=""
+                />
+                {post?.comments?.length}
+              </div>
+            </DialogTrigger>
+            <DialogContent className="dark">
+              <DialogTitle>Reply</DialogTitle>
+              <ReplyForm authorId={user?.id} postId={postId} />
+            </DialogContent>
+          </Dialog>
+        ) : (
+          <a
+            href={`/r/${sub?.sub.title}/comments/${post?.id}`}
+            className="rounded-full flex gap-2 items-center text-sm bg-neutral-700 px-4 hover:bg-neutral-600"
+          >
+            <Image
+              src="/icons/comments-icon.svg"
+              width={16}
+              height={16}
+              alt=""
+            />
+            {post?.comments?.length}
+          </a>
+        )
       ) : (
         <div className="text-xs">{post?.comments?.length ?? 0} Comments</div>
       )}
