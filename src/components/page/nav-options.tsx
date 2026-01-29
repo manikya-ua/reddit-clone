@@ -1,5 +1,6 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -8,7 +9,9 @@ import { useGetUser } from "@/app/hooks/useGetUser";
 import { cn } from "@/lib/utils";
 import LoginCard from "./login-card";
 import Modal from "./modal";
+import ProfilePic from "./ProfilePic";
 import SignupCard from "./sign-up-card";
+import UserDropdown from "./user-dropdown";
 import WithTooltip from "./with-tooltip";
 
 export default function NavOptions() {
@@ -16,9 +19,10 @@ export default function NavOptions() {
   const [showModal, setShowModal] = useState<"none" | "login" | "signup">(
     "none",
   );
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { mutate: logout } = useGetLogout({
-    onSuccess: () => router.refresh(),
+    onSuccess: () => {},
   });
   return (
     <div className="flex items-center justify-end gap-2 min-w-76.75">
@@ -28,7 +32,7 @@ export default function NavOptions() {
         </Modal>
       ) : showModal === "signup" ? (
         <Modal>
-          <SignupCard />
+          <SignupCard setShowModal={setShowModal} />
         </Modal>
       ) : null}
       {user ? (
@@ -48,15 +52,18 @@ export default function NavOptions() {
           <NavButton tooltipText="Open inbox" disabled={isLoading}>
             <Image src="/icons/inbox-icon.svg" width={20} height={20} alt="" />
           </NavButton>
-          <NavButton tooltipText="Open profile menu" disabled={isLoading}>
-            <button
-              type="button"
-              onClick={() => logout()}
-              className="size-6 flex items-center justify-center rounded-full"
-            >
-              {user.username?.[0]}
-            </button>
-          </NavButton>
+          <UserDropdown
+            user={user}
+            logout={() => {
+              logout();
+              queryClient.invalidateQueries();
+              router.refresh();
+            }}
+          >
+            <WithTooltip tooltipText="Open profile menu">
+              <ProfilePic firstChar={user.username?.[0] ?? ""} />
+            </WithTooltip>
+          </UserDropdown>
         </>
       ) : (
         <>

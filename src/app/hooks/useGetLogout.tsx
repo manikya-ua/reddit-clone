@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import { client } from "@/server/client";
-import { useRouter } from "next/navigation";
 
 export function useGetLogout({ onSuccess }: { onSuccess: () => void }) {
   return useMutation({

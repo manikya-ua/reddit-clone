@@ -15,7 +15,13 @@ type FormData = {
   password: string;
 };
 
-export default function SignupCard() {
+export default function SignupCard({
+  setShowModal,
+}: {
+  setShowModal: React.Dispatch<
+    React.SetStateAction<"none" | "login" | "signup">
+  >;
+}) {
   const [formData, setFormData] = useState<FormData>();
 
   const router = useRouter();
@@ -49,6 +55,15 @@ export default function SignupCard() {
           }}
           disabled={isPending}
         />
+        <div className="text-center mt-2">
+          <button
+            type="button"
+            className="cursor-pointer underline hover:no-underline"
+            onClick={() => setShowModal("login")}
+          >
+            Login instead
+          </button>
+        </div>
         <div className="text-rose-500 text-center mt-2">
           {error ? error.message : ""}
         </div>

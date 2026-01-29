@@ -11,9 +11,7 @@ import { client } from "@/server/client";
 export default function LoginCard({
   setShowModal,
 }: {
-  setShowModal: React.Dispatch<
-    React.SetStateAction<"none" | "login" | "signup">
-  >;
+  setShowModal: React.Dispatch< React.SetStateAction<"none" | "login" | "signup"> >;
 }) {
   const queryClient = useQueryClient();
 

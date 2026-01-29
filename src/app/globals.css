@@ -128,4 +128,8 @@
 		scrollbar-gutter: stable;
 		--scrollbar-background: #0e1113, var(--shreddit-content-background);
 	}
+
+	*::selection {
+		@apply bg-violet-300 text-violet-800;
+	}
 }
