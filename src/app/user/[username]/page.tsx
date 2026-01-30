@@ -38,11 +38,11 @@ export default async function Page({ params }: PageProps<"/user/[username]">) {
           postIds={user?.posts}
         />
       </div>
-      <div className="fixed top-16 right-2 bg-neutral-700 p-4 rounded-md flex flex-col gap-3 w-68">
+      <div className="fixed top-16 right-2 bg-black p-4 rounded-md flex flex-col gap-3 w-68">
         <div className="flex justify-between items-center text-lg">
           {user?.username}
           <button
-            className="p-2 rounded-full bg-black hover:bg-neutral-800 transition-colors"
+            className="p-2 rounded-full bg-neutral-900 hover:bg-neutral-800 transition-colors"
             type="button"
           >
             <Image
@@ -63,7 +63,7 @@ export default async function Page({ params }: PageProps<"/user/[username]">) {
           </button>
           <button
             type="button"
-            className="flex items-center gap-2 px-3 py-2 rounded-full bg-black"
+            className="flex items-center gap-2 px-3 py-2 rounded-full bg-neutral-900"
           >
             <Image src="/icons/chat-icon.svg" width={16} height={16} alt="" />
             Start Chat

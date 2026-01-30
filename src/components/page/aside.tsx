@@ -5,6 +5,7 @@ import { useGetSubs } from "@/app/hooks/useGetSubs";
 import { useGetUser } from "@/app/hooks/useGetUser";
 import type { subs } from "@/database/drizzle/schema";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 export default function Aside({
   expanded,
@@ -250,6 +251,8 @@ function Section({
   }[];
   collapseTitle?: string;
 }) {
+  const pathName = usePathname();
+
   const [isCollapsed, setIsCollapsed] = useState(false);
   return (
     <div>
@@ -275,7 +278,10 @@ function Section({
           <a
             key={item.key ?? item.text}
             href={item.href}
-            className="flex gap-2 items-center py-3 px-4 rounded-lg hover:bg-neutral-900"
+            className={cn(
+              "flex gap-2 items-center py-3 px-4 rounded-lg hover:bg-neutral-900",
+              item.href === pathName && "bg-neutral-800",
+            )}
           >
             <Image
               src={item.icon}

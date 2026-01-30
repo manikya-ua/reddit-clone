@@ -49,14 +49,14 @@ export default function SubSide({ subTitle }: { subTitle: string | null }) {
   };
 
   return (
-    <div className="fixed top-16 right-2 bg-neutral-700 p-4 rounded-md flex flex-col gap-3 w-68">
+    <div className="fixed top-16 right-2 bg-black p-4 rounded-md flex flex-col gap-3 w-68">
       <div className="flex justify-between items-center text-lg">
         {sub?.title}
       </div>
       <div className="flex gap-2 text-xs">
         <a
           href={`/submit?from=${sub?.id}`}
-          className="flex items-center gap-2 px-3 py-2 rounded-full bg-black"
+          className="flex items-center gap-2 px-3 py-2 rounded-full bg-neutral-800 hover:bg-neutral-700"
         >
           <Image src="/icons/plus-icon.svg" width={16} height={16} alt="" />
           Create Post

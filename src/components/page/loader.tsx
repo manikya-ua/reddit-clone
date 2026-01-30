@@ -1,19 +1,9 @@
-import Image from "next/image";
+import { Loader2 } from "lucide-react";
 
-export default function Loader({
-  width,
-  height,
-}: {
-  width: number;
-  height: number;
-}) {
+export default function Loader() {
   return (
-    <Image
-      src="/icons/loader"
-      width={width}
-      height={height}
-      className="animate-spin"
-      alt=""
-    />
+    <div className="fixed inset-0 z-10 backdrop-contrast-50 flex items-center justify-center">
+      <Loader2 className="size-20 animate-spin" />
+    </div>
   );
 }

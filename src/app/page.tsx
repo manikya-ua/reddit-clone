@@ -25,7 +25,7 @@ export default async function Home() {
         <HomeFeed initialData={result} withEdit={true} />
       </div>
       <div className="w-100 shrink-0 hidden xl:block">
-        <div className="m-5 rounded-lg bg-neutral-700 pt-7">
+        <div className="m-5 rounded-lg bg-black pt-7">
           <div className="uppercase text-sm text-neutral-300 ml-5">
             Recent Posts
           </div>
