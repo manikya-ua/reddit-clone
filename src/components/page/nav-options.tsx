@@ -25,11 +25,11 @@ export default function NavOptions() {
   return (
     <div className="flex items-center justify-end gap-2 min-w-76.75">
       {showModal === "login" ? (
-        <Modal>
+        <Modal setShowModal={setShowModal}>
           <LoginCard setShowModal={setShowModal} />
         </Modal>
       ) : showModal === "signup" ? (
-        <Modal>
+        <Modal setShowModal={setShowModal}>
           <SignupCard setShowModal={setShowModal} />
         </Modal>
       ) : null}
