@@ -2,13 +2,13 @@
 
 import type { RJSFSchema } from "@rjsf/utils";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useGetUser } from "@/app/hooks/useGetUser";
 import schema from "@/app/schemas/new-com-schema.json";
 import uiSchema from "@/app/schemas/new-com-ui-schema.json";
 import { DefaultForm } from "@/components/form/default-form";
 import { client } from "@/server/client";
-import { useRouter } from "next/navigation";
 
 type FormData = {
   title: string;

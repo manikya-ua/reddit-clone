@@ -8,6 +8,7 @@ import { useGetSubs } from "@/app/hooks/useGetSubs";
 import { useGetUser } from "@/app/hooks/useGetUser";
 import { useJoinSub } from "@/app/hooks/useJoinSub";
 import { useLeaveSub } from "@/app/hooks/useLeaveSub";
+import Indeterminate from "./indeterminate";
 
 export default function SubSide({ subTitle }: { subTitle: string | null }) {
   const { data: subResult, isLoading: isLoadingSub } = useGetSub({
@@ -50,6 +51,7 @@ export default function SubSide({ subTitle }: { subTitle: string | null }) {
 
   return (
     <div className="fixed top-16 right-2 bg-black p-4 rounded-md flex flex-col gap-3 w-68">
+      <Indeterminate isLoading={isLoadingSub} />
       <div className="flex justify-between items-center text-lg">
         {sub?.title}
       </div>

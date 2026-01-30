@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import Indeterminate from "./indeterminate";
 import ReplyForm from "./reply-form";
 
 export default function VotesSection({
@@ -55,6 +56,7 @@ export default function VotesSection({
   const isDownvoted = post?.downvotes?.includes(user?.id ?? -1);
   return (
     <div className="flex gap-3 mt-5">
+      <Indeterminate isLoading={isLoading} />
       {withEdit ? (
         <div
           className={cn(

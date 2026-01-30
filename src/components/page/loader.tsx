@@ -1,9 +1,9 @@
-import { Loader2 } from "lucide-react";
+import Indeterminate from "./indeterminate";
 
 export default function Loader() {
   return (
-    <div className="fixed inset-0 z-10 backdrop-contrast-50 flex items-center justify-center">
-      <Loader2 className="size-20 animate-spin" />
+    <div className="fixed inset-0 z-10 flex items-center justify-center">
+      <Indeterminate isLoading={true} />
     </div>
   );
 }

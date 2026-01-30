@@ -8,6 +8,7 @@ import { useGetSubById } from "@/app/hooks/useGetSub";
 import type { posts } from "@/database/drizzle/schema";
 import { client } from "@/server/client";
 import VotesSection from "./votes-section";
+import Indeterminate from "./indeterminate";
 
 export function ShowFeed({
   postIds,
@@ -43,6 +44,7 @@ export function ShowFeed({
 
   return (
     <div className="flex flex-col gap-5 w-full max-w-2xl relative">
+      <Indeterminate isLoading={isLoading} />
       {isLoading ? (
         <div className="h-40">
           <Loader2 className="size-10 animate-spin w-fit absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2" />

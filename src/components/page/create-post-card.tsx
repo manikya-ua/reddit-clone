@@ -10,6 +10,7 @@ import schema from "@/app/schemas/new-post-schema.json";
 import uiSchema from "@/app/schemas/new-post-ui-schema.json";
 import { DefaultForm } from "@/components/form/default-form";
 import { client } from "@/server/client";
+import Indeterminate from "./indeterminate";
 
 type FormData = {
   title: string;
@@ -23,6 +24,7 @@ export default function NewPostCard() {
   const { data: user, isLoading } = useGetUser();
   const subResult = useGetSubs(user?.subs);
   const userSubs = subResult.map((sub) => sub.data);
+  const isLoadingUserSubs = subResult.some((sub) => sub.isLoading);
 
   const newSchema = {
     ...schema,
@@ -73,6 +75,7 @@ export default function NewPostCard() {
 
   return (
     <div className="flex flex-col rounded-2xl px-18 py-20 max-w-prose">
+      <Indeterminate isLoading={isLoadingUserSubs} />
       <div className="grow shrink-0">
         <DefaultForm
           schema={newSchema}

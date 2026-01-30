@@ -8,6 +8,7 @@ import Comments from "@/components/page/comments";
 import VotesSection from "@/components/page/votes-section";
 import type { posts, subs } from "@/database/drizzle/schema";
 import BackButton from "./back-button";
+import Indeterminate from "./indeterminate";
 
 export function WithComments({
   subTitle,
@@ -33,8 +34,11 @@ export function WithComments({
 
   const { data: user, isLoading: isUserLoading } = useGetUser();
 
+  const isLoading = isSubLoading || isPostLoading || isUserLoading;
+
   return (
     <div className="flex gap-3 max-w-6xl mx-auto px-7 py-10">
+      <Indeterminate isLoading={isLoading} />
       <div>
         <BackButton />
       </div>
