@@ -288,7 +288,7 @@ function Section({
               item.href === pathName && "bg-neutral-800",
             )}
             onClick={(e) => {
-              if (item.enabled === undefined ? false : item.enabled) {
+              if (item.enabled === undefined ? false : !item.enabled) {
                 toast.error("You are not allowed to access this page");
                 e.preventDefault();
               }
