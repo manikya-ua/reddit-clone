@@ -7,11 +7,14 @@ import loginSchema from "@/app/schemas/login-schema.json";
 import loginUiSchema from "@/app/schemas/login-ui-schema.json";
 import { DefaultForm } from "@/components/form/default-form";
 import { client } from "@/server/client";
+import { toast } from "sonner";
 
 export default function LoginCard({
   setShowModal,
 }: {
-  setShowModal: React.Dispatch< React.SetStateAction<"none" | "login" | "signup"> >;
+  setShowModal: React.Dispatch<
+    React.SetStateAction<"none" | "login" | "signup">
+  >;
 }) {
   const queryClient = useQueryClient();
 
@@ -41,6 +44,9 @@ export default function LoginCard({
 
       queryClient.invalidateQueries({ queryKey: ["get-user"] });
     },
+    onError: () => {
+      toast.error("Invalid credentials");
+    },
   });
 
   const [formData, setFormData] = useState<{ email: string; password: string }>(
@@ -61,7 +67,7 @@ export default function LoginCard({
           }}
           onSubmit={(data) => {
             login(data.formData);
-			setShowModal("none")
+            setShowModal("none");
           }}
           disabled={isPending}
         />

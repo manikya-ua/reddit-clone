@@ -12,8 +12,8 @@ import {
 export const users = pgTable("users", {
   id: integer().primaryKey().generatedByDefaultAsIdentity(),
   username: varchar({ length: 20 }).unique(),
-  email: varchar({ length: 20 }).unique(),
-  password: varchar({ length: 20 }),
+  email: varchar({ length: 200 }).unique(),
+  password: varchar({ length: 200 }),
   karma: integer().default(0),
   posts: integer()
     .references((): AnyPgColumn => posts.id)
