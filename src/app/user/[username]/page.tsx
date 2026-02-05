@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ShowFeed } from "@/components/page/show-feed";
 import { db } from "@/database/drizzle/db";
 import { posts } from "@/database/drizzle/schema";
-import { getUserByUsername } from "@/lib/server-actions";
+import { getUserByUsername } from "@/lib/actions/auth";
 
 export default async function Page({ params }: PageProps<"/user/[username]">) {
   const { username } = await params;
