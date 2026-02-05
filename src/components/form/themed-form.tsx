@@ -1,4 +1,5 @@
 import { type ThemeProps, withTheme } from "@rjsf/core";
+import type { RJSFSchema } from "@rjsf/utils";
 import DescriptionFieldTemplate from "./templates/DescriptionFieldTemplate";
 import ErrorListTemplate from "./templates/ErrorListTemplate";
 import FieldErrorTemplate from "./templates/FieldErrorTemplate";
@@ -35,4 +36,8 @@ const theme: ThemeProps = {
  * It is the form with custom fields and templates, but is not passed with validator.
  * If you want use validator then use DefaultForm component
  */
-export const ThemedForm = withTheme(theme);
+export function getThemedForm<T>() {
+  return withTheme(
+    theme as ThemeProps<T | undefined, RJSFSchema, Map<number, string | null>>,
+  );
+}

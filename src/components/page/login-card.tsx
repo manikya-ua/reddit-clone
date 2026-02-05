@@ -2,9 +2,9 @@
 
 import type { RJSFSchema } from "@rjsf/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { DefaultForm } from "@/components/form/default-form";
+import { getDefaultForm } from "@/components/form/default-form";
 import loginSchema from "@/schemas/login-schema.json";
 import loginUiSchema from "@/schemas/login-ui-schema.json";
 import { client } from "@/server/client";
@@ -29,7 +29,10 @@ const LoginCard = React.memo(({ children }: { children: React.ReactNode }) => {
     isPending,
     error,
   } = useMutation({
-    mutationFn: async (data: FormData) => {
+    mutationFn: async (data: FormData | undefined) => {
+      if (!data) {
+        throw new Error("form data needed");
+      }
       const session = await client.api.v1.sessions.$post({
         json: { email: data.email, password: data.password },
       });
@@ -59,6 +62,8 @@ const LoginCard = React.memo(({ children }: { children: React.ReactNode }) => {
     email: "",
     password: "",
   });
+
+  const DefaultForm = useMemo(() => getDefaultForm<FormData>(), []);
 
   return (
     <Dialog>

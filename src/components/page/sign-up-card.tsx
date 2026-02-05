@@ -2,8 +2,8 @@
 
 import type { RJSFSchema, UiSchema } from "@rjsf/utils";
 import { useMutation } from "@tanstack/react-query";
-import React, { useState } from "react";
-import { DefaultForm } from "@/components/form/default-form";
+import React, { useMemo, useState } from "react";
+import { getDefaultForm } from "@/components/form/default-form";
 import signupSchema from "@/schemas/signup-schema.json";
 import signupUiSchema from "@/schemas/signup-ui-schema.json";
 import { client } from "@/server/client";
@@ -35,7 +35,10 @@ const SignupCard = React.memo(
       isPending,
       error,
     } = useMutation({
-      mutationFn: async (data: FormData) => {
+      mutationFn: async (data: FormData | undefined) => {
+        if (!data) {
+          throw new Error("form data required");
+        }
         const res = await client.api.v1.user.$post({ json: data });
         if (res.status !== 200) {
           throw new Error("Invalid username or email");
@@ -49,6 +52,8 @@ const SignupCard = React.memo(
       email: "",
       password: "",
     });
+
+    const DefaultForm = useMemo(() => getDefaultForm<FormData>(), []);
 
     return (
       <Dialog>

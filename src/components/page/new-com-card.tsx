@@ -3,8 +3,8 @@
 import type { RJSFSchema } from "@rjsf/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { DefaultForm } from "@/components/form/default-form";
+import { useMemo, useState } from "react";
+import { getDefaultForm } from "@/components/form/default-form";
 import { useGetUser } from "@/hooks/useGetUser";
 import schema from "@/schemas/new-com-schema.json";
 import uiSchema from "@/schemas/new-com-ui-schema.json";
@@ -32,9 +32,12 @@ const NewComCard = () => {
     isPending,
     error,
   } = useMutation({
-    mutationFn: async (data: FormData) => {
+    mutationFn: async (data: FormData | undefined) => {
       if (!user || !user.id) {
         throw new Error("You need to login to create a sub");
+      }
+      if (!data) {
+        throw new Error("form data needed");
       }
       const result = await client.api.v1.subs.create.$post({
         json: {
@@ -49,6 +52,8 @@ const NewComCard = () => {
     },
     onSuccess: () => router.replace(`/r/${formData.title}`),
   });
+
+  const DefaultForm = useMemo(() => getDefaultForm<FormData>(), []);
 
   return (
     <div className="flex flex-col rounded-2xl px-18 py-20 max-w-prose">

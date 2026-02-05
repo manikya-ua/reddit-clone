@@ -2,11 +2,11 @@
 
 import type { RJSFSchema } from "@rjsf/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import schema from "@/schemas/reply-schema.json";
 import uiSchema from "@/schemas/reply-ui-schema.json";
 import { client } from "@/server/client";
-import { DefaultForm } from "../form/default-form";
+import { getDefaultForm } from "../form/default-form";
 
 type FormData = {
   content: string;
@@ -84,6 +84,8 @@ const ReplyForm = React.memo(
         throw new Error("Either commentId or postId needed");
       }
     }, [commentId, postId, formData, addCommentToComment, addCommentToPost]);
+
+    const DefaultForm = useMemo(() => getDefaultForm<FormData>(), []);
 
     return (
       <DefaultForm

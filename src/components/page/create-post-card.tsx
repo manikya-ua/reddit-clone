@@ -4,7 +4,7 @@ import type { RJSFSchema } from "@rjsf/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
-import { DefaultForm } from "@/components/form/default-form";
+import { getDefaultForm } from "@/components/form/default-form";
 import { useGetSubs } from "@/hooks/useGetSubs";
 import { useGetUser } from "@/hooks/useGetUser";
 import schema from "@/schemas/new-post-schema.json";
@@ -51,9 +51,12 @@ const NewPostCard = React.memo(() => {
     isPending,
     error,
   } = useMutation({
-    mutationFn: async (data: FormData) => {
+    mutationFn: async (data: FormData | undefined) => {
       if (!user || !user.id) {
         throw new Error("You need to login to create a post");
+      }
+      if (!data) {
+        throw new Error("form data required");
       }
       if (!data.sub) {
         throw new Error("Need to post to a sub");
@@ -76,6 +79,8 @@ const NewPostCard = React.memo(() => {
       router.replace(`/r/${sub.title}`);
     },
   });
+
+  const DefaultForm = useMemo(() => getDefaultForm<FormData | undefined>(), []);
 
   return (
     <div className="flex flex-col rounded-2xl px-18 py-20 max-w-prose">
