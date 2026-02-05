@@ -92,14 +92,14 @@ const VotesSection = React.memo(
                 src="/icons/up-icon.svg"
                 width={16}
                 height={16}
-                alt=""
+                alt="upvote"
                 className="block group-hover:hidden"
               />
               <Image
                 src="/icons/up-icon-red.svg"
                 width={16}
                 height={16}
-                alt=""
+                alt="upvoted"
                 className="group-hover:block hidden"
               />
             </button>
@@ -114,14 +114,14 @@ const VotesSection = React.memo(
                 src="/icons/down-icon.svg"
                 width={16}
                 height={16}
-                alt=""
+                alt="downvote"
                 className="block group-hover:hidden"
               />
               <Image
                 src="/icons/down-icon-blue.svg"
                 width={16}
                 height={16}
-                alt=""
+                alt="downvoted"
                 className="group-hover:block hidden"
               />
             </button>
@@ -148,7 +148,7 @@ const VotesSection = React.memo(
                     src="/icons/comments-icon.svg"
                     width={16}
                     height={16}
-                    alt=""
+                    alt="comment"
                   />
                   {post?.comments?.length}
                 </div>
@@ -170,7 +170,7 @@ const VotesSection = React.memo(
                 src="/icons/comments-icon.svg"
                 width={16}
                 height={16}
-                alt=""
+                alt="comments"
               />
               {post?.comments?.length}
             </a>

@@ -23,19 +23,34 @@ const NavOptions = React.memo(() => {
       {user ? (
         <>
           <NavButton tooltipText="Advertise on Reddit" disabled={isLoading}>
-            <Image src="/icons/ads-icon.svg" width={20} height={20} alt="" />
+            <Image src="/icons/ads-icon.svg" width={20} height={20} alt="Ads" />
           </NavButton>
           <NavButton tooltipText="Open chat" disabled={isLoading}>
-            <Image src="/icons/chat-icon.svg" width={20} height={20} alt="" />
+            <Image
+              src="/icons/chat-icon.svg"
+              width={20}
+              height={20}
+              alt="Chat"
+            />
           </NavButton>
           <NavButton tooltipText="Create post" disabled={isLoading}>
             <a href={Routes.NEW_POST} className="flex gap-2">
-              <Image src="/icons/chat-icon.svg" width={20} height={20} alt="" />
+              <Image
+                src="/icons/plus-round.svg"
+                width={20}
+                height={20}
+                alt="Create post"
+              />
               <span className="text-sm">Create</span>
             </a>
           </NavButton>
           <NavButton tooltipText="Open inbox" disabled={isLoading}>
-            <Image src="/icons/inbox-icon.svg" width={20} height={20} alt="" />
+            <Image
+              src="/icons/inbox-icon.svg"
+              width={20}
+              height={20}
+              alt="Inbox"
+            />
           </NavButton>
           <UserDropdown user={user} logout={() => logout()}>
             <WithTooltip tooltipText="Open profile menu">
@@ -51,7 +66,7 @@ const NavOptions = React.memo(() => {
                 src="/icons/get-app-icon.svg"
                 width={20}
                 height={20}
-                alt=""
+                alt="Get app"
               />
               <span className="text-sm">Get App</span>
             </div>
@@ -71,7 +86,7 @@ const NavOptions = React.memo(() => {
               src="/icons/hamburger-icon.svg"
               width={20}
               height={20}
-              alt=""
+              alt="Hamburger"
             />
           </NavButton>
         </>

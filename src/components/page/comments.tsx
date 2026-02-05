@@ -69,7 +69,7 @@ const Comment = React.memo(
             type="button"
             onClick={() => setCollapsed(false)}
           >
-            <Image src="/icons/plus-round.svg" width={20} height={20} alt="" />
+            <Image src="/icons/plus-round.svg" width={20} height={20} alt="Expand" />
             <span className="text-sm">{author?.username}</span>
           </button>
         ) : (

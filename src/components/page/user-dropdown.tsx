@@ -50,15 +50,25 @@ const UserDropdown = React.memo(
               </a>
             </DropdownMenuLabel>
             <DropdownMenuItem className="flex items-center gap-3 px-2 py-4">
-              <Image src="/icons/cloth.svg" width={16} height={16} alt="" />
+              <Image
+                src="/icons/cloth.svg"
+                width={16}
+                height={16}
+                alt="edit avatar"
+              />
               <span>Edit Avatar</span>
             </DropdownMenuItem>
             <DropdownMenuItem className="flex items-center gap-3 px-2 py-4">
-              <Image src="/icons/notebook.svg" width={16} height={16} alt="" />
+              <Image
+                src="/icons/notebook.svg"
+                width={16}
+                height={16}
+                alt="drafts"
+              />
               <span>Drafts</span>
             </DropdownMenuItem>
             <DropdownMenuItem className="flex items-center gap-3 px-2 py-2">
-              <Image src="/icons/cup.svg" width={16} height={16} alt="" />
+              <Image src="/icons/cup.svg" width={16} height={16} alt="awards" />
               <span className="flex flex-col gap-0.5">
                 <span>Achievements</span>
                 <span className="text-xs text-muted-foreground">
@@ -67,7 +77,7 @@ const UserDropdown = React.memo(
               </span>
             </DropdownMenuItem>
             <DropdownMenuItem className="flex items-center gap-3 px-2 py-2">
-              <Image src="/icons/money.svg" width={16} height={16} alt="" />
+              <Image src="/icons/money.svg" width={16} height={16} alt="earn" />
               <span className="flex flex-col gap-0.5">
                 <span>Earn</span>
                 <span className="text-xs text-muted-foreground">
@@ -79,7 +89,12 @@ const UserDropdown = React.memo(
               onClick={() => logout()}
               className="flex items-center gap-3 px-2 py-4 cursor-pointer"
             >
-              <Image src="/icons/logout.svg" width={16} height={16} alt="" />
+              <Image
+                src="/icons/logout.svg"
+                width={16}
+                height={16}
+                alt="logout"
+              />
               <span>Logout</span>
             </DropdownMenuItem>
           </DropdownMenuGroup>

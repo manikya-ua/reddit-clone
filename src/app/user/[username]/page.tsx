@@ -49,7 +49,7 @@ export default async function Page({ params }: PageProps<"/user/[username]">) {
               src="/icons/hamburger-icon.svg"
               width={20}
               height={20}
-              alt=""
+              alt="hamburger"
             />
           </button>
         </div>
@@ -58,14 +58,24 @@ export default async function Page({ params }: PageProps<"/user/[username]">) {
             type="button"
             className="flex items-center gap-2 px-3 py-2 rounded-full bg-blue-600"
           >
-            <Image src="/icons/chat-icon.svg" width={16} height={16} alt="" />
+            <Image
+              src="/icons/chat-icon.svg"
+              width={16}
+              height={16}
+              alt="Follow"
+            />
             Follow
           </button>
           <button
             type="button"
             className="flex items-center gap-2 px-3 py-2 rounded-full bg-neutral-900"
           >
-            <Image src="/icons/chat-icon.svg" width={16} height={16} alt="" />
+            <Image
+              src="/icons/chat-icon.svg"
+              width={16}
+              height={16}
+              alt="Chat"
+            />
             Start Chat
           </button>
         </div>

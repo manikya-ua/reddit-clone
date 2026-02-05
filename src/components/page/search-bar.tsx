@@ -22,7 +22,7 @@ const SearchBar = React.memo(() => {
         href={Routes.NONE}
         className="flex items-center gap-2 shrink-0 px-2 ml-1 mr-0.5 rounded-full hover:bg-neutral-700 transition-colors"
       >
-        <Image src="/icons/ask-icon.svg" width={16} height={16} alt="" />
+        <Image src="/icons/ask-icon.svg" width={16} height={16} alt="Ask" />
         <span className="text-xs">Ask</span>
       </Link>
     </div>

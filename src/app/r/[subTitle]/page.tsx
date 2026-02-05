@@ -33,7 +33,7 @@ export default async function Page({ params }: PageProps<"/r/[subTitle]">) {
               src="/icons/outline-logo.svg"
               width={58}
               height={58}
-              alt=""
+              alt="sub main image"
             />
           </div>
           <div className="flex flex-col gap-0.5">

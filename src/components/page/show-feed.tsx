@@ -104,7 +104,7 @@ const Post = React.memo(
               src="/icons/outline-logo.svg"
               width={12}
               height={12}
-              alt=""
+              alt="Sub profile"
             />
             r/{sub?.sub.title}
             <span>-</span>

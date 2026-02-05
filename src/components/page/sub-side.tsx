@@ -72,7 +72,7 @@ const SubSide = React.memo(({ subTitle }: { subTitle: string | null }) => {
             }
           }}
         >
-          <Image src="/icons/plus-icon.svg" width={16} height={16} alt="" />
+          <Image src="/icons/plus-icon.svg" width={16} height={16} alt="New post" />
           Create Post
         </a>
         <button
@@ -86,7 +86,7 @@ const SubSide = React.memo(({ subTitle }: { subTitle: string | null }) => {
       </div>
       <div className="flex flex-col gap-2">
         <div className="flex gap-3">
-          <Image src="/icons/cake-icon.svg" width={14} height={14} alt="" />
+          <Image src="/icons/cake-icon.svg" width={14} height={14} alt="Birthday" />
           <span className="text-xs text-neutral-300">
             Created{" "}
             {format(
@@ -96,7 +96,7 @@ const SubSide = React.memo(({ subTitle }: { subTitle: string | null }) => {
           </span>
         </div>
         <div className="flex gap-3">
-          <Image src="/icons/globe-icon.svg" width={14} height={14} alt="" />
+          <Image src="/icons/globe-icon.svg" width={14} height={14} alt="Visibility" />
           <span className="text-xs text-neutral-300">
             {sub?.status === "private" ? "Private" : "Public"}
           </span>

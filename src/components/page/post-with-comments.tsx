@@ -48,7 +48,7 @@ export const PostWithComments = React.memo(
               src="/icons/outline-logo.svg"
               width={20}
               height={20}
-              alt=""
+              alt="Sub profile"
             />
             <div className="flex flex-col gap-0.5">
               <span>r/{sub?.title}</span>

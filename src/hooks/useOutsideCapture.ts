@@ -15,5 +15,5 @@ export const useOutsideCapture = ({
     }
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);
-  });
+  }, [ref.current, onClickOutside]);
 };

@@ -279,7 +279,7 @@ const Section = React.memo(
             </span>
             <Image
               src="/icons/dropdown-icon.svg"
-              alt=""
+              alt="Dropdown"
               className={cn(
                 "transition-transform",
                 !isCollapsed && "rotate-180",
@@ -312,7 +312,7 @@ const Section = React.memo(
             >
               <Image
                 src={item.icon}
-                alt=""
+                alt={item.text}
                 width={item.width}
                 height={item.height}
                 className="shrink-0"

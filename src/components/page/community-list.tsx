@@ -79,7 +79,12 @@ const Row = React.memo(
           href={Routes.SUBREDDIT({ subTitle: sub.title ?? "" })}
           className="flex gap-2 group"
         >
-          <Image src="/icons/outline-logo.svg" width={20} height={20} alt="" />
+          <Image
+            src="/icons/outline-logo.svg"
+            width={20}
+            height={20}
+            alt="Sub profile"
+          />
           <div className="flex flex-col gap-0.5">
             <span className="text-sm group-hover:text-blue-400">
               {sub.title}
