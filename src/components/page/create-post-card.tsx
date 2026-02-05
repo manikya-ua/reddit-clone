@@ -4,11 +4,11 @@ import type { RJSFSchema } from "@rjsf/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
-import { useGetSubs } from "@/app/hooks/useGetSubs";
-import { useGetUser } from "@/app/hooks/useGetUser";
 import schema from "@/app/schemas/new-post-schema.json";
 import uiSchema from "@/app/schemas/new-post-ui-schema.json";
 import { DefaultForm } from "@/components/form/default-form";
+import { useGetSubs } from "@/hooks/useGetSubs";
+import { useGetUser } from "@/hooks/useGetUser";
 import { client } from "@/server/client";
 import Indeterminate from "./indeterminate";
 

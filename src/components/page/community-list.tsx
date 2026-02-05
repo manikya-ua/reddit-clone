@@ -3,11 +3,11 @@
 import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import React, { useCallback, useMemo } from "react";
-import { useGetSubs } from "@/app/hooks/useGetSubs";
-import { useGetUser } from "@/app/hooks/useGetUser";
-import { useLeaveSub } from "@/app/hooks/useLeaveSub";
 import { Routes } from "@/client/routes";
 import type { subs } from "@/database/drizzle/schema";
+import { useGetSubs } from "@/hooks/useGetSubs";
+import { useGetUser } from "@/hooks/useGetUser";
+import { useLeaveSub } from "@/hooks/useLeaveSub";
 import { Skeleton } from "../ui/skeleton";
 import WithTooltip from "./with-tooltip";
 

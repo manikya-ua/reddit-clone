@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
-import { useGetLogout } from "@/app/hooks/useGetLogout";
-import { useGetUser } from "@/app/hooks/useGetUser";
 import { Routes } from "@/client/routes";
+import { useGetLogout } from "@/hooks/useGetLogout";
+import { useGetUser } from "@/hooks/useGetUser";
 import { cn } from "@/lib/utils";
 import LoginCard from "./login-card";
 import Modal from "./modal";

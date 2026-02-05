@@ -3,9 +3,9 @@
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
-import { useGetCommentById } from "@/app/hooks/useGetCommentById";
-import { useGetUserDetailsById } from "@/app/hooks/useGetUserDetailsById";
 import { Routes } from "@/client/routes";
+import { useGetCommentById } from "@/hooks/useGetCommentById";
+import { useGetUserDetailsById } from "@/hooks/useGetUserDetailsById";
 import { cn } from "@/lib/utils";
 import ProfilePic from "./profile-pic";
 import VotesSectionComment from "./votes-section-comment";

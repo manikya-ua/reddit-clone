@@ -5,12 +5,12 @@ import { format, parse } from "date-fns";
 import Image from "next/image";
 import React, { useCallback, useMemo } from "react";
 import { toast } from "sonner";
-import { useGetSub } from "@/app/hooks/useGetSub";
-import { useGetSubs } from "@/app/hooks/useGetSubs";
-import { useGetUser } from "@/app/hooks/useGetUser";
-import { useJoinSub } from "@/app/hooks/useJoinSub";
-import { useLeaveSub } from "@/app/hooks/useLeaveSub";
 import { Routes } from "@/client/routes";
+import { useGetSub } from "@/hooks/useGetSub";
+import { useGetSubs } from "@/hooks/useGetSubs";
+import { useGetUser } from "@/hooks/useGetUser";
+import { useJoinSub } from "@/hooks/useJoinSub";
+import { useLeaveSub } from "@/hooks/useLeaveSub";
 import Indeterminate from "./indeterminate";
 
 const SubSide = React.memo(({ subTitle }: { subTitle: string | null }) => {

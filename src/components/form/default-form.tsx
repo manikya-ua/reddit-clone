@@ -4,8 +4,8 @@ import type { IChangeEvent } from "@rjsf/core";
 import type { RJSFSchema, UiSchema } from "@rjsf/utils";
 import validator from "@rjsf/validator-ajv8";
 import type { FormEvent } from "react";
-import { useGetSubs } from "@/app/hooks/useGetSubs";
-import { useGetUser } from "@/app/hooks/useGetUser";
+import { useGetSubs } from "@/hooks/useGetSubs";
+import { useGetUser } from "@/hooks/useGetUser";
 import { ThemedForm } from "./themed-form";
 
 type DefaultFormProps<T> = {

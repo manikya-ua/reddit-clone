@@ -1,5 +1,6 @@
 "use client";
-import { LinearProgress } from "@mui/material";
+
+import { LoaderIcon } from "lucide-react";
 
 export default function Indeterminate({
   isLoading = true,
@@ -7,8 +8,8 @@ export default function Indeterminate({
   isLoading?: boolean;
 }) {
   return isLoading ? (
-    <div className="fixed z-50 top-0 inset-x-0 text-[#fc4c02]">
-      <LinearProgress color="inherit"></LinearProgress>
+    <div className="fixed z-50 inset-0 backdrop-blur-sm bg-black/20 flex flex-col items-center justify-center">
+      <LoaderIcon className="size-10 animate-spin" />
     </div>
   ) : null;
 }

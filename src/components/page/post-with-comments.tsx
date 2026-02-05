@@ -2,16 +2,16 @@
 import { formatDistance, parse } from "date-fns";
 import Image from "next/image";
 import React from "react";
-import { useGetPostById } from "@/app/hooks/useGetPostById";
-import { useGetSub } from "@/app/hooks/useGetSub";
-import { useGetUser } from "@/app/hooks/useGetUser";
 import Comments from "@/components/page/comments";
 import VotesSection from "@/components/page/votes-section";
 import type { posts, subs } from "@/database/drizzle/schema";
+import { useGetPostById } from "@/hooks/useGetPostById";
+import { useGetSub } from "@/hooks/useGetSub";
+import { useGetUser } from "@/hooks/useGetUser";
 import BackButton from "./back-button";
 import Indeterminate from "./indeterminate";
 
-export const WithComments = React.memo(
+export const PostWithComments = React.memo(
   ({
     subTitle,
     postId,

@@ -3,10 +3,10 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { useGetSubs } from "@/app/hooks/useGetSubs";
-import { useGetUser } from "@/app/hooks/useGetUser";
 import { Routes } from "@/client/routes";
 import type { subs } from "@/database/drizzle/schema";
+import { useGetSubs } from "@/hooks/useGetSubs";
+import { useGetUser } from "@/hooks/useGetUser";
 import { cn } from "@/lib/utils";
 
 export default function Aside({

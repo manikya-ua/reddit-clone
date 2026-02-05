@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
+import { PostWithComments } from "@/components/page/post-with-comments";
 import SubSide from "@/components/page/sub-side";
-import { WithComments } from "@/components/page/with-comments";
 import { db } from "@/database/drizzle/db";
 import { posts, subs } from "@/database/drizzle/schema";
 
@@ -24,7 +24,7 @@ export default async function Page({
 
   return (
     <div className="flex-1 relative">
-      <WithComments
+      <PostWithComments
         subTitle={subTitle}
         postId={parsedPostId}
         initialData={{ sub, post }}
