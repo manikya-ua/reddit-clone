@@ -9,7 +9,6 @@ import { useGetPostById } from "@/hooks/useGetPostById";
 import { useGetSub } from "@/hooks/useGetSub";
 import { useGetUser } from "@/hooks/useGetUser";
 import BackButton from "./back-button";
-import Indeterminate from "./indeterminate";
 
 export const PostWithComments = React.memo(
   ({
@@ -40,7 +39,6 @@ export const PostWithComments = React.memo(
 
     return (
       <div className="flex gap-3 max-w-6xl mx-auto px-7 py-10">
-        <Indeterminate isLoading={isLoading} />
         <div>
           <BackButton />
         </div>

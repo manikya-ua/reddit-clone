@@ -3,8 +3,8 @@
 import type { RJSFSchema } from "@rjsf/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useCallback, useState } from "react";
-import schema from "@/app/schemas/reply-schema.json";
-import uiSchema from "@/app/schemas/reply-ui-schema.json";
+import schema from "@/schemas/reply-schema.json";
+import uiSchema from "@/schemas/reply-ui-schema.json";
 import { client } from "@/server/client";
 import { DefaultForm } from "../form/default-form";
 

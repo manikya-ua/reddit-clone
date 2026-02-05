@@ -11,7 +11,6 @@ import { useGetSubs } from "@/hooks/useGetSubs";
 import { useGetUser } from "@/hooks/useGetUser";
 import { useJoinSub } from "@/hooks/useJoinSub";
 import { useLeaveSub } from "@/hooks/useLeaveSub";
-import Indeterminate from "./indeterminate";
 
 const SubSide = React.memo(({ subTitle }: { subTitle: string | null }) => {
   const { data: sub, isLoading: isLoadingSub } = useGetSub({
@@ -59,7 +58,6 @@ const SubSide = React.memo(({ subTitle }: { subTitle: string | null }) => {
 
   return (
     <div className="fixed top-16 right-2 bg-black p-4 rounded-md flex flex-col gap-3 w-68">
-      <Indeterminate isLoading={isLoadingSub} />
       <div className="flex justify-between items-center text-lg">
         {sub?.title}
       </div>

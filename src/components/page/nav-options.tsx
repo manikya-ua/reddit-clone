@@ -1,23 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import { Routes } from "@/client/routes";
 import { useGetLogout } from "@/hooks/useGetLogout";
 import { useGetUser } from "@/hooks/useGetUser";
 import { cn } from "@/lib/utils";
 import LoginCard from "./login-card";
-import Modal from "./modal";
 import ProfilePic from "./profile-pic";
-import SignupCard from "./sign-up-card";
 import UserDropdown from "./user-dropdown";
 import WithTooltip from "./with-tooltip";
 
 const NavOptions = React.memo(() => {
   const { data: user, isLoading } = useGetUser();
-  const [showModal, setShowModal] = useState<"none" | "login" | "signup">(
-    "none",
-  );
   const { mutate: logout } = useGetLogout({
     onSuccess: () => {
       window.location.reload();
@@ -25,15 +20,6 @@ const NavOptions = React.memo(() => {
   });
   return (
     <div className="flex items-center justify-end gap-2 min-w-76.75">
-      {showModal === "login" ? (
-        <Modal setShowModal={setShowModal}>
-          <LoginCard setShowModal={setShowModal} />
-        </Modal>
-      ) : showModal === "signup" ? (
-        <Modal setShowModal={setShowModal}>
-          <SignupCard setShowModal={setShowModal} />
-        </Modal>
-      ) : null}
       {user ? (
         <>
           <NavButton tooltipText="Advertise on Reddit" disabled={isLoading}>
@@ -74,13 +60,11 @@ const NavOptions = React.memo(() => {
             className="bg-orange-600 hover:bg-orange-800"
             tooltipText="Log in to reddit"
           >
-            <button
-              type="button"
-              onClick={() => setShowModal("login")}
-              className="text-sm"
-            >
-              Log In
-            </button>
+            <LoginCard>
+              <button type="button" className="text-sm">
+                Log In
+              </button>
+            </LoginCard>
           </NavButton>
           <NavButton tooltipText="Open settings menu">
             <Image

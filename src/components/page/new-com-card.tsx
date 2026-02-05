@@ -4,10 +4,10 @@ import type { RJSFSchema } from "@rjsf/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import schema from "@/app/schemas/new-com-schema.json";
-import uiSchema from "@/app/schemas/new-com-ui-schema.json";
 import { DefaultForm } from "@/components/form/default-form";
 import { useGetUser } from "@/hooks/useGetUser";
+import schema from "@/schemas/new-com-schema.json";
+import uiSchema from "@/schemas/new-com-ui-schema.json";
 import { client } from "@/server/client";
 
 type FormData = {

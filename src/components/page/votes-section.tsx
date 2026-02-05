@@ -16,7 +16,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import Indeterminate from "./indeterminate";
 import ReplyForm from "./reply-form";
 
 const VotesSection = React.memo(
@@ -72,7 +71,6 @@ const VotesSection = React.memo(
     );
     return (
       <div className="flex gap-3 mt-5">
-        <Indeterminate isLoading={isLoading} />
         {withEdit ? (
           <div
             className={cn(

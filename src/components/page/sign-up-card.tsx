@@ -1,12 +1,18 @@
 "use client";
 
-import type { RJSFSchema } from "@rjsf/utils";
+import type { RJSFSchema, UiSchema } from "@rjsf/utils";
 import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
-import signUpSchema from "@/app/schemas/signup-schema.json";
-import signUpUiSchema from "@/app/schemas/signup-ui-schema.json";
 import { DefaultForm } from "@/components/form/default-form";
+import signupSchema from "@/schemas/signup-schema.json";
+import signupUiSchema from "@/schemas/signup-ui-schema.json";
 import { client } from "@/server/client";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 
 type FormData = {
   username: string;
@@ -16,14 +22,14 @@ type FormData = {
 
 const SignupCard = React.memo(
   ({
-    setShowModal,
+    children,
+    schema = signupSchema as RJSFSchema,
+    uiSchema = signupUiSchema,
   }: {
-    setShowModal: React.Dispatch<
-      React.SetStateAction<"none" | "login" | "signup">
-    >;
+    children: React.ReactNode;
+    schema?: RJSFSchema;
+    uiSchema?: UiSchema;
   }) => {
-    const [formData, setFormData] = useState<FormData>();
-
     const {
       mutate: signUp,
       isPending,
@@ -38,35 +44,36 @@ const SignupCard = React.memo(
       onSuccess: () => window.location.reload(),
     });
 
+    const [formData, setFormData] = useState<FormData>({
+      username: "",
+      email: "",
+      password: "",
+    });
+
     return (
-      <div className="flex flex-col bg-[#181c1f] rounded-2xl px-18 py-20">
-        <div className="grow shrink-0">
-          <DefaultForm
-            schema={signUpSchema as RJSFSchema}
-            uiSchema={signUpUiSchema}
-            formData={formData}
-            onChange={(data) => {
-              setFormData(data);
-            }}
-            onSubmit={(data) => {
-              signUp(data.formData);
-            }}
-            disabled={isPending}
-          />
-          <div className="text-center mt-2">
-            <button
-              type="button"
-              className="cursor-pointer underline hover:no-underline"
-              onClick={() => setShowModal("login")}
-            >
-              Login instead
-            </button>
+      <Dialog>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent className="flex flex-col bg-[#181c1f] rounded-2xl px-18 py-20 border-none">
+          <DialogTitle className="text-center text-2xl">Sign up</DialogTitle>
+          <div className="grow shrink-0">
+            <DefaultForm
+              schema={schema}
+              uiSchema={uiSchema}
+              formData={formData}
+              onChange={(data) => {
+                setFormData(data);
+              }}
+              onSubmit={(data) => {
+                signUp(data.formData);
+              }}
+              disabled={isPending}
+            />
+            <div className="text-rose-500 text-center mt-2">
+              {error ? error.message : ""}
+            </div>
           </div>
-          <div className="text-rose-500 text-center mt-2">
-            {error ? error.message : ""}
-          </div>
-        </div>
-      </div>
+        </DialogContent>
+      </Dialog>
     );
   },
 );

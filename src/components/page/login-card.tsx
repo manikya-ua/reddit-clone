@@ -4,61 +4,67 @@ import type { RJSFSchema } from "@rjsf/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { toast } from "sonner";
-import loginSchema from "@/app/schemas/login-schema.json";
-import loginUiSchema from "@/app/schemas/login-ui-schema.json";
 import { DefaultForm } from "@/components/form/default-form";
+import loginSchema from "@/schemas/login-schema.json";
+import loginUiSchema from "@/schemas/login-ui-schema.json";
 import { client } from "@/server/client";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import SignupCard from "./sign-up-card";
 
-const LoginCard = React.memo(
-  ({
-    setShowModal,
-  }: {
-    setShowModal: React.Dispatch<
-      React.SetStateAction<"none" | "login" | "signup">
-    >;
-  }) => {
-    const queryClient = useQueryClient();
+type FormData = {
+  email: string;
+  password: string;
+};
 
-    const {
-      mutate: login,
-      isPending,
-      error,
-    } = useMutation({
-      mutationFn: async (data: { email: string; password: string }) => {
-        const session = await client.api.v1.sessions.$post({
-          json: { email: data.email, password: data.password },
-        });
+const LoginCard = React.memo(({ children }: { children: React.ReactNode }) => {
+  const queryClient = useQueryClient();
 
-        if (session.status !== 200) {
-          throw new Error("Something wnent wrong");
-        }
+  const {
+    mutate: login,
+    isPending,
+    error,
+  } = useMutation({
+    mutationFn: async (data: FormData) => {
+      const session = await client.api.v1.sessions.$post({
+        json: { email: data.email, password: data.password },
+      });
 
-        const { session: parsedSession } = await session.json();
+      if (session.status !== 200) {
+        throw new Error("Something wnent wrong");
+      }
 
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            email: parsedSession.email,
-            descriptor: parsedSession.descriptor,
-          }),
-        );
+      const { session: parsedSession } = await session.json();
 
-        queryClient.invalidateQueries({ queryKey: ["get-user"] });
-      },
-      onError: () => {
-        toast.error("Invalid credentials");
-      },
-    });
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          email: parsedSession.email,
+          descriptor: parsedSession.descriptor,
+        }),
+      );
 
-    const [formData, setFormData] = useState<{
-      email: string;
-      password: string;
-    }>({
-      email: "",
-      password: "",
-    });
-    return (
-      <div className="flex flex-col bg-[#181c1f] rounded-2xl px-18 py-20">
+      queryClient.invalidateQueries({ queryKey: ["get-user"] });
+    },
+    onError: () => {
+      toast.error("Invalid credentials");
+    },
+  });
+
+  const [formData, setFormData] = useState<FormData>({
+    email: "",
+    password: "",
+  });
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="flex flex-col bg-[#181c1f] rounded-2xl px-18 py-20 border-none">
+        <DialogTitle className="text-center text-2xl">Login</DialogTitle>
         <div className="grow shrink-0">
           <DefaultForm
             schema={loginSchema as RJSFSchema}
@@ -69,26 +75,26 @@ const LoginCard = React.memo(
             }}
             onSubmit={(data) => {
               login(data.formData);
-              setShowModal("none");
             }}
             disabled={isPending}
           />
-          <div className="text-center mt-2">
-            <button
-              type="button"
-              className="cursor-pointer underline hover:no-underline"
-              onClick={() => setShowModal("signup")}
-            >
-              Sign up instead
-            </button>
-          </div>
+          <SignupCard>
+            <div className="text-center mt-2">
+              <button
+                type="button"
+                className="cursor-pointer underline hover:no-underline"
+              >
+                Sign up instead
+              </button>
+            </div>
+          </SignupCard>
           <div className="text-rose-500 text-center mt-2">
             {error ? error.message : ""}
           </div>
         </div>
-      </div>
-    );
-  },
-);
+      </DialogContent>
+    </Dialog>
+  );
+});
 
 export default LoginCard;
